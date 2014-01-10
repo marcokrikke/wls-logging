@@ -1,0 +1,38 @@
+def getGitRevision = {
+    try {
+        def git = 'git rev-parse --short HEAD'.execute()
+        def status = git.waitFor()
+        assert status == 0, "${git.err.text}"
+        return git.text.trim()
+    }
+    catch (AssertionError a) {
+    }
+    catch (Exception e) {
+    }
+    'unknown'
+}
+
+allprojects {
+    group = 'nl.eveoh.wlslogging'
+    version = "1.0.0-" + getGitRevision()
+
+    ext.springVersion = '3.2.5.RELEASE'
+    ext.sfl4jVersion = '1.7.5'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+
+    repositories {
+        maven {
+            url "https://maven.eveoh.nl/content/groups/public"
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}

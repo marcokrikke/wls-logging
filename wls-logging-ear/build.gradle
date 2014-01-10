@@ -1,0 +1,51 @@
+description = 'WLS Logging EAR Module'
+
+apply plugin: 'ear'
+
+dependencies {
+    // Workaround to include WAR. See http://issues.gradle.org/browse/GRADLE-1912
+    deploy project(path: ':wls-logging-web', configuration: "archives")
+}
+
+ear {
+    deploymentDescriptor {
+        version = "5"
+        displayName = "WLS Logging"
+        description = "WLS Logging tests"
+
+        webModule("wlslogging.war", weblogicDeploymentPath)
+    }
+
+    manifest {
+        attributes(
+                'Implementation-Vendor': 'Eveoh',
+                'Provider': 'Gradle',
+                'Build-Version': version,
+                'WebLogic-Application-Version': version
+        )
+    }
+}
+
+configurations {
+    weblogicDeployer
+}
+
+dependencies {
+    weblogicDeployer 'com.oracle.weblogic-deployer:weblogic-deployer:10.3.6.0'
+}
+
+task deploy(type: JavaExec, dependsOn: ear) {
+    description = "Deploy to Weblogic server"
+
+    classpath = configurations.weblogicDeployer
+    main = "weblogic.Deployer"
+    args = "-noexit -adminurl $weblogicAdminUrl -user $weblogicUser -password $weblogicPassword -deploy -name $weblogicDeploymentName -source $ear.archivePath -upload -remote -verbose".split().toList()
+}
+
+task undeploy(type: JavaExec) {
+    description = "Undeploy from Weblogic server"
+
+    classpath = configurations.weblogicDeployer
+    main = "weblogic.Deployer"
+    args = "-noexit -adminurl $weblogicAdminUrl -user $weblogicUser -password $weblogicPassword -undeploy -name $weblogicDeploymentName -remote -verbose".split().toList()
+}

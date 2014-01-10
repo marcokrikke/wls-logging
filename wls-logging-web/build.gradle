@@ -1,0 +1,45 @@
+description = 'WLS Logging Web Module'
+
+apply plugin: 'war'
+
+war {
+    manifest {
+        attributes(
+                'Implementation-Title': 'WLS Logging Web Module',
+                'Implementation-Version': version
+        )
+    }
+
+    // Define a static archive name, since the deployment plan refers to this.
+    archiveName 'wlslogging.war'
+
+    webInf {
+        from 'src/main/webapp/**'
+    }
+}
+
+dependencies {
+    // Logging
+    compile "org.slf4j:slf4j-api:${sfl4jVersion}"
+    compile "org.slf4j:jcl-over-slf4j:${sfl4jVersion}"
+    compile "org.slf4j:log4j-over-slf4j:${sfl4jVersion}"
+    compile "org.slf4j:slf4j-jdk14:${sfl4jVersion}"
+
+    // Spring
+    compile "org.springframework:spring-context:${springVersion}"
+    compile(group: "org.springframework", name: "spring-core", version: "${springVersion}") {
+        exclude(module: "commons-logging")
+    }
+    compile "org.springframework:spring-webmvc:${springVersion}"
+    compile "org.springframework:spring-context-support:${springVersion}"
+    compile "org.springframework:spring-web:${springVersion}"
+
+    compile "org.springframework:spring-aspects:${springVersion}"
+
+    compile "javax.servlet.jsp.jstl:jstl-api:1.2"
+    compile "org.glassfish.web:jstl-impl:1.2"
+
+    providedCompile "javax.servlet:servlet-api:2.5"
+    providedCompile "javax.el:el-api:1.0"
+    providedCompile "javax.servlet.jsp:jsp-api:2.2"
+}

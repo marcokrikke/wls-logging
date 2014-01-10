@@ -1,0 +1,2 @@
+rootProject.name = 'wls-logging'
+include ':wls-logging-web', ':wls-logging-ear'

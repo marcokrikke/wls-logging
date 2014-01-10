@@ -1,0 +1,2 @@
+# WLS Logging test
+
