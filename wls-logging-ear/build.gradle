@@ -34,12 +34,16 @@ dependencies {
     weblogicDeployer 'com.oracle.weblogic-deployer:weblogic-deployer:10.3.6.0'
 }
 
+ext {
+    deploymentPlanPath = file (weblogicDeploymentPlan)
+}
+
 task deploy(type: JavaExec, dependsOn: ear) {
     description = "Deploy to Weblogic server"
 
     classpath = configurations.weblogicDeployer
     main = "weblogic.Deployer"
-    args = "-noexit -adminurl $weblogicAdminUrl -user $weblogicUser -password $weblogicPassword -deploy -name $weblogicDeploymentName -source $ear.archivePath -upload -remote -verbose".split().toList()
+    args = "-noexit -adminurl $weblogicAdminUrl -user $weblogicUser -password $weblogicPassword -deploy -name $weblogicDeploymentName -source $ear.archivePath -plan $deploymentPlanPath -upload -remote -verbose".split().toList()
 }
 
 task undeploy(type: JavaExec) {

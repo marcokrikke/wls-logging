@@ -3,3 +3,4 @@ weblogicUser=weblogic
 weblogicPassword=welcome1
 weblogicDeploymentName=wls-logging
 weblogicDeploymentPath=wls-logging
+weblogicDeploymentPlan=deployment-plan.xml

@@ -5,6 +5,18 @@
     <display-name>WLS Logging</display-name>
 
     <description>WLS Logging</description>
+    
+    <env-entry>
+        <env-entry-name>logLocation</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>/tmp</env-entry-value>
+    </env-entry>
+
+    <env-entry>
+        <env-entry-name>logLevel</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>WARN</env-entry-value>
+    </env-entry>
 
     <context-param>
         <param-name>defaultHtmlEscape</param-name>

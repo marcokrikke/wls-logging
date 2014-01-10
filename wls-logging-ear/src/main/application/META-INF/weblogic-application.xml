@@ -10,6 +10,7 @@
     <prefer-application-packages>
         <package-name>org.slf4j.*</package-name>
         <package-name>org.springframework.*</package-name>
+        <package-name>org.apache.commons.*</package-name>
     </prefer-application-packages>
 
 </weblogic-application>

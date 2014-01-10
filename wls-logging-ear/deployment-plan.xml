@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd">
+    <application-name>MyEnrolments</application-name>
+    <variable-definition>
+        <variable>
+            <name>logLocation</name>
+            <value>/var/log</value>
+        </variable>
+        <variable>
+            <name>logLevel</name>
+            <value>WARN</value>
+        </variable>
+    </variable-definition>
+
+    <module-override>
+        <module-name>wlslogging.war</module-name>
+        <module-type>war</module-type>
+        <module-descriptor external="false">
+            <root-element>web-app</root-element>
+            <uri>WEB-INF/web.xml</uri>
+            <variable-assignment>
+                <name>logLocation</name>
+                <xpath>/web-app/env-entry/[env-entry-name="logLocation"]/env-entry-value</xpath>
+                <operation>replace</operation>
+            </variable-assignment>
+            <variable-assignment>
+                <name>logLevel</name>
+                <xpath>/web-app/env-entry/[env-entry-name="logLevel"]/env-entry-value</xpath>
+                <operation>replace</operation>
+            </variable-assignment>
+        </module-descriptor>
+    </module-override>
+</deployment-plan>
